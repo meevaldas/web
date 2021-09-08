@@ -15,5 +15,6 @@ export class User {
 
     set(update: UserProps): void {
         Object.assign(this.data, update);
+        //here comes the error
     }
 }
