@@ -37,7 +37,7 @@ export class User {
             return;
         }
 
-        handlers.foreach(callback => {
+        handlers.forEach(callback => {
             callback();
         });
     }
