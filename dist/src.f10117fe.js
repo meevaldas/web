@@ -136,6 +136,7 @@ var User = /*#__PURE__*/function () {
     _classCallCheck(this, User);
 
     this.data = data;
+    this.events = {};
   }
 
   _createClass(User, [{
@@ -146,7 +147,27 @@ var User = /*#__PURE__*/function () {
   }, {
     key: "set",
     value: function set(update) {
-      Object.assign(this.data, update);
+      Object.assign(this.data, update); //here comes the error
+    }
+  }, {
+    key: "on",
+    value: function on(eventName, callback) {
+      var handlers = this.events[eventName] || [];
+      handlers.push(callback);
+      this.events[eventName] = handlers;
+    }
+  }, {
+    key: "trigger",
+    value: function trigger(eventName) {
+      var handlers = this.events[eventName];
+
+      if (!handlers || handlers.length === 0) {
+        return;
+      }
+
+      handlers.forEach(function (callback) {
+        callback();
+      });
     }
   }]);
 
@@ -171,8 +192,12 @@ user.set({
   name: 'Daniela',
   age: 25
 });
-user.get('name');
-user.get('age');
+user.on('change', function () {
+  console.log('Change #1');
+});
+/*user.get('name');
+user.get('age');*/
+//changes
 },{"./models/User":"src/models/User.ts"}],"../../.nvm/versions/node/v16.8.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -201,7 +226,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44287" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33201" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
