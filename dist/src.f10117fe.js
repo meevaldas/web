@@ -117,88 +117,9 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/models/User.ts":[function(require,module,exports) {
+})({"src/index.ts":[function(require,module,exports) {
 "use strict";
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.User = void 0;
-
-var User = /*#__PURE__*/function () {
-  function User(data) {
-    _classCallCheck(this, User);
-
-    this.data = data;
-    this.events = {};
-  }
-
-  _createClass(User, [{
-    key: "get",
-    value: function get(propName) {
-      return this.data[propName];
-    }
-  }, {
-    key: "set",
-    value: function set(update) {
-      Object.assign(this.data, update); //here comes the error
-    }
-  }, {
-    key: "on",
-    value: function on(eventName, callback) {
-      var handlers = this.events[eventName] || [];
-      handlers.push(callback);
-      this.events[eventName] = handlers;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger(eventName) {
-      var handlers = this.events[eventName];
-
-      if (!handlers || handlers.length === 0) {
-        return;
-      }
-
-      handlers.forEach(function (callback) {
-        callback();
-      });
-    }
-  }]);
-
-  return User;
-}();
-
-exports.User = User;
-},{}],"src/index.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var User_1 = require("./models/User");
-
-var user = new User_1.User({
-  name: 'Brendon',
-  age: 5
-});
-user.set({
-  name: 'Daniela',
-  age: 25
-});
-user.on('change', function () {
-  console.log('Change #1');
-});
-/*user.get('name');
-user.get('age');*/
-//changes
-},{"./models/User":"src/models/User.ts"}],"../../.nvm/versions/node/v16.8.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v16.8.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

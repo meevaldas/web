@@ -1,21 +1,24 @@
+import axios, {AxiosResponse} from 'axios';
+
 //We used interface here to reduce the complexity of writing
 //the properties in a vertical manner. Also it creates a confusion
 interface UserProps{
-    name:string,
+    id?: number,
+    name?:string,
     //name?: string - Means , this is optional. A user can have a name
     //but not necessary
-    age: number
+    age?: number
 }
 
 type Callback = () => void;
 
 export class User {
-    events: {[key:string]: Callback} = {}
+    events: {[key:string]: Callback[]} = {};
 
     constructor(private data: UserProps) {
     }
 
-    get(propName: keyof UserProps): string | number {
+    get(propName: string): number | string {
         return this.data[propName];
     }
 
@@ -40,5 +43,22 @@ export class User {
         handlers.forEach(callback => {
             callback();
         });
+    }
+
+    fetch(): void{
+        axios.get(`http://localhost:3000/users/${this.get('id')}`)
+            .then((response: AxiosResponse): void => {
+                this.set(response.data);
+            });
+    }
+
+    save(): void{
+        const id = this.get('id');
+        if(this.get('id')){
+            axios.put(`http://localhost:3000/users/${id})`, this.data)
+        }
+        else{
+            axios.put(`http://localhost:3000/users)`, this.data)
+        }
     }
 }

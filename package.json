@@ -4,5 +4,9 @@
   },
   "dependencies": {
     "axios": "^0.21.4"
+  },
+  "scripts": {
+    "start:db": "json-server -w db.json",
+    "start:parcel": "parcel ndex.html"
   }
 }
