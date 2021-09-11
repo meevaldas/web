@@ -18,31 +18,13 @@ export class User {
     constructor(private data: UserProps) {
     }
 
-    get(propName: string): number | string {
+    get(propName: keyof UserProps): number | string | undefined{
         return this.data[propName];
     }
 
     set(update: UserProps): void {
         Object.assign(this.data, update);
         //here comes the error
-    }
-
-    on(eventName:string, callback: Callback):void{
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
-    }
-
-    trigger(eventName: string): void{
-        const handlers = this.events[eventName];
-
-        if(!handlers || handlers.length === 0){
-            return;
-        }
-
-        handlers.forEach(callback => {
-            callback();
-        });
     }
 
     fetch(): void{
