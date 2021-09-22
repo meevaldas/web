@@ -1,46 +1,29 @@
-import axios, {AxiosResponse} from 'axios';
-
+import {Model} from './Model';
+import {Attributes} from './Attributes';
+import {ApiSync} from './ApiSync';
+import {Eventing} from './Eventing';
 //We used interface here to reduce the complexity of writing
 //the properties in a vertical manner. Also it creates a confusion
-interface UserProps{
-    id?: number,
-    name?:string,
+export interface UserProps{
+    id?: number;
+    name?:string;
+    age?: number;
     //name?: string - Means , this is optional. A user can have a name
     //but not necessary
-    age?: number
 }
 
-type Callback = () => void;
+const rootUrl = 'https://localhost:3000/users';
 
-export class User {
-    events: {[key:string]: Callback[]} = {};
-
-    constructor(private data: UserProps) {
+export class User extends Model<UserProps>{
+    static buildUser(attrs: UserProps): User {
+        return new User(
+            new Attributes<UserProps>(attrs),
+            new Eventing(),
+            new ApiSync<UserProps>(rootUrl)
+        );
     }
 
-    get(propName: keyof UserProps): number | string | undefined{
-        return this.data[propName];
-    }
-
-    set(update: UserProps): void {
-        Object.assign(this.data, update);
-        //here comes the error
-    }
-
-    fetch(): void{
-        axios.get(`http://localhost:3000/users/${this.get('id')}`)
-            .then((response: AxiosResponse): void => {
-                this.set(response.data);
-            });
-    }
-
-    save(): void{
-        const id = this.get('id');
-        if(this.get('id')){
-            axios.put(`http://localhost:3000/users/${id})`, this.data)
-        }
-        else{
-            axios.put(`http://localhost:3000/users)`, this.data)
-        }
+    isAdminUser():boolean{
+        return this.get('id') === 1;
     }
 }
