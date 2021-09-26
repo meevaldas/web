@@ -33,7 +33,8 @@ export class Model<T extends HasId> {
     get = this.attributes.get;
 
     set(update: T): void{
-        this.events.trigger('change')
+        this.attributes.set(update);
+        this.events.trigger('change');
     }
     fetch(): void{
         const id = this.attributes.get('id');

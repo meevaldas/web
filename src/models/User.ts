@@ -2,6 +2,7 @@ import {Model} from './Model';
 import {Attributes} from './Attributes';
 import {ApiSync} from './ApiSync';
 import {Eventing} from './Eventing';
+import {Collection} from './Collection';
 //We used interface here to reduce the complexity of writing
 //the properties in a vertical manner. Also it creates a confusion
 export interface UserProps{
@@ -23,7 +24,14 @@ export class User extends Model<UserProps>{
         );
     }
 
-    isAdminUser():boolean{
-        return this.get('id') === 1;
+    static buildUserCollection(): Collection<User, UserProps>{
+        return new Collection<User, UserProps>
+        (rootUrl,(json: UserProps) => User.buildUser(json)
+        );
+    }
+
+    setRandomAge():void{
+        const age = Math.round(Math.random() * 100);
+        this.set({ age });
     }
 }
